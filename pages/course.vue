@@ -7,7 +7,8 @@
     >
       <h1 class="text-3xl text-center">
         <span class="font-medium">
-          <span class="font-bold">Course Title</span>
+          Course:
+          <span class="font-bold">Mastering Nuxt 3</span>
         </span>
       </h1>
     </div>
