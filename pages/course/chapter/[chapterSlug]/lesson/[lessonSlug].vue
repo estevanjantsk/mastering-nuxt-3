@@ -21,7 +21,8 @@
       </NuxtLink>
     </div>
     <VideoPlayer v-if="lesson?.videoId" :videoId="lesson.videoId" />
-    <p>{{ lesson?.text }}</p>
+    <p class="my-4">{{ lesson?.text }}</p>
+    <LessonCompleteButton :modelValue="isLessonComplete" :onUpdate:modelValue="toogleComplete" />
   </div>
 </template>
 
@@ -47,4 +48,34 @@
   useHead({
     title
   })
+
+  const progress = useState<Array<Array<boolean>>>('progress', () => {
+    return [];
+  });
+
+  const isLessonComplete = computed(() => {
+    if(!chapter.value || !lesson.value) { return false }
+
+    if(!progress.value[chapter.value.number - 1]) {
+      return false;
+    }
+
+    if(!progress.value[chapter.value.number - 1][lesson.value.number - 1]) {
+      return false;
+    }
+
+    return progress.value[chapter.value.number - 1][lesson.value.number - 1]
+  });
+
+  const toogleComplete = () => {
+    if(!chapter.value || !lesson.value) {
+      return;
+    }
+
+    if(!progress.value[chapter.value.number - 1]) {
+      progress.value[chapter.value.number - 1] = [];
+    }
+
+    progress.value[chapter.value.number - 1][lesson.value.number - 1] = !isLessonComplete.value;
+  }
 </script>
